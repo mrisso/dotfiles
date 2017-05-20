@@ -101,6 +101,9 @@ I am also using ":init" have evil-mode always active when I open emacs.
   (evil-mode t)
   :ensure t)
 
+(use-package evil-leader
+  :ensure t)
+
 #+END_SRC
 
 ** powerline
