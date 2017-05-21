@@ -88,6 +88,20 @@ After that, we should require the package and evaluate it:
 
 #+END_SRC
 
+** fly-check
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package flycheck
+  :ensure t
+  :init 
+  (global-flycheck-mode))
+
+(use-package flycheck-irony
+  :ensure t)
+
+#+END_SRC emacs-lisp
+
 ** evil-mode
 
 After installing use-package, we only need to specify the packages we need in a simple way.
@@ -195,3 +209,6 @@ After my function is made, I assigned it to the shortcut C-c t.
   :ensure t)
 
 #+END_SRC
+
+
+   
