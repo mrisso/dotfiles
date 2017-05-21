@@ -88,13 +88,13 @@ After that, we should require the package and evaluate it:
 
 #+END_SRC
 
-** fly-check
+** flycheck
 
 #+BEGIN_SRC emacs-lisp
 
 (use-package flycheck
   :ensure t
-  :init 
+  :config
   (global-flycheck-mode))
 
 (use-package flycheck-irony
@@ -210,5 +210,12 @@ After my function is made, I assigned it to the shortcut C-c t.
 
 #+END_SRC
 
+** relative-line-numbers
 
-   
+#+BEGIN_SRC emacs-lisp
+
+(use-package relative-line-numbers
+  :config (global-relative-line-numbers-mode)
+  :ensure t)
+
+#+END_SRC
