@@ -1,12 +1,14 @@
-* Removing Scroll and Tool bars
+* Removing Scroll, Tool and Menu bars
 
-It's very easy to set those two things. We only need two elisp lines of code:
+It's very easy to set those things. We only need three elisp lines of code on custom-set-variables:
 
 
 #+BEGIN_SRC emacs-lisp
 
-'(scroll-bar-mode nil)
-'(tool-bar-mode nil)
+(custom-set-variables
+ '(menu-bar-mode nil)
+ '(scroll-bar-mode nil)
+ '(tool-bar-mode nil))
 
 #+END_SRC
 
@@ -41,6 +43,14 @@ By using the following command on your init file, you get the daemon server star
 
 #+END_SRC
 
+* Indentation Configs
+  
+#+BEGIN_SRC emacs-lisp
+
+(c-set-offset 'substatement-open 0)
+
+#+END_SRC
+  
 * Package Archives
 
 The first thing to do is to require the emacs package manager and to add org and MELPA package archives:
@@ -64,6 +74,16 @@ To enable all packages we want, we need to initialize packages and to set the in
 
 #+END_SRC
 * Packages
+** let-alist (for older versions)
+
+#+BEGIN_SRC emacs-lisp
+
+(unless (package-installed-p 'let-alist)
+  (package-refresh-contents)
+  (package-install 'let-alist))
+
+#+END_SRC
+
 ** use-package
 
 I decided to use 'use-package' because it is easy to migrate between machines and it is surely easy to install packages and load them.
@@ -80,12 +100,8 @@ To install it, we need a simple elisp code:
 After that, we should require the package and evaluate it:
 
 #+BEGIN_SRC emacs-lisp
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(require 'use-package)
+(eval-when-compile
+  (require 'use-package))
 (setq use-package-always-ensure t)
 
 #+END_SRC
