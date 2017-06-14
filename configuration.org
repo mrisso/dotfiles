@@ -159,7 +159,7 @@ After that, we should require the package and evaluate it:
   :ensure t
   :init (setq rtags-use-helm t))
 
-#+end_src emacs-lisp
+#+end_src
 *** flycheck
 
 #+begin_src emacs-lisp
@@ -174,7 +174,7 @@ After that, we should require the package and evaluate it:
 (use-package flycheck-rtags
   :ensure t)
 
-#+end_src emacs-lisp
+#+end_src
 
 *** auto-complete-clang
    
@@ -183,16 +183,7 @@ After that, we should require the package and evaluate it:
 (use-package auto-complete-clang
   :ensure t)
 
-#+end_src emacs-lisp
-
-*** company-clang
-
-#+begin_src emacs-lisp
-
-(use-package company-clang
-  :ensure t)
-
-#+end_src emacs-lisp
+#+end_src
 
 *** irony
 
@@ -201,7 +192,7 @@ After that, we should require the package and evaluate it:
 (use-package irony 
   :ensure t)
 
-#+end_src emacs-lisp
+#+end_src
 
 *** Finally, cmake-ide
 
@@ -211,7 +202,7 @@ After that, we should require the package and evaluate it:
   :ensure t
   :init (cmake-ide-setup))
 
-#+end_src emacs-lisp
+#+end_src
 
 ** evil-mode
 
