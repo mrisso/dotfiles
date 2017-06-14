@@ -44,38 +44,17 @@ By using the following command on your init file, you get the daemon server star
 #+END_SRC
 
 * Indentation Configs
-
-  To configure the indentation to use tabs of size 4 instead of spaces, we can setup a hook function that will be called when the language 
-mode initiates. My config does that for c/cpp mode. One of the most important things for me is the /c-set-offset/ line, which sets the 
-/substatement-open/ to 0. What it does is simply change the (for me) annoying indentation default
-
-#+BEGIN_SRC C
-
-//From this:
-if(x)
-  {
-     //code;
-  }
-
-//To this:
-if(x)
-{
-   //code;
-}
-
-#+END_SRC
-
-  The other configs are quite self-explanatory. Maybe except the /tab-stop-list/. This is the list of spaces your TAB will stop. You can see
-clearly that every item on the list corresponds to the previous + 4, which is reasonable.
   
 #+BEGIN_SRC emacs-lisp
 
 (defun my-c-mode-common-hook ()
+ ;; my customizations for all of c-mode, c++-mode, objc-mode, java-mode
  (c-set-offset 'substatement-open 0)
+ ;; other customizations can go here
 
  (setq c++-tab-always-indent t)
- (setq c-basic-offset 4)                  
- (setq c-indent-level 4)                  
+ (setq c-basic-offset 4)                  ;; Default is 2
+ (setq c-indent-level 4)                  ;; Default is 2
 
  (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60))
  (setq tab-width 4)
@@ -111,8 +90,6 @@ To enable all packages we want, we need to initialize packages and to set the in
 * Packages
 ** let-alist (for older versions)
 
-   Some versions of emacs don't come with /let-alist/ by default. It turns out that some packages depend on it, so I'll install it here.
-
 #+BEGIN_SRC emacs-lisp
 
 (unless (package-installed-p 'let-alist)
@@ -123,7 +100,7 @@ To enable all packages we want, we need to initialize packages and to set the in
 
 ** use-package
 
-I decided to use /use-package/ because it is easy to migrate between machines and it is surely easy to install packages and load them.
+I decided to use 'use-package' because it is easy to migrate between machines and it is surely easy to install packages and load them.
 To install it, we need a simple elisp code:
 
 #+BEGIN_SRC emacs-lisp
@@ -142,20 +119,99 @@ After that, we should require the package and evaluate it:
 (setq use-package-always-ensure t)
 
 #+END_SRC
-
-** flycheck
-
-   I'm still having problems with /use-package/ and /flycheck/. This implementation *does not* work for me yet. But I'll leave it here.
+  
+** helm
 
 #+BEGIN_SRC emacs-lisp
 
-(use-package flycheck
+(use-package helm
   :ensure t)
+
+(global-set-key (kbd "M-x") #'helm-M-x)
+(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+
+(helm-mode 1)
+
+#+END_SRC
+   
+** projectile
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package projectile
+  :ensure t)
+
+#+END_SRC
+
+** cmake-ide
+
+   To use cmake-ide, we need to install these dependencies that are also useful for other things.
+
+*** rtags
+
+#+begin_src emacs-lisp
+
+(use-package rtags
+  :ensure t)
+
+(use-package helm-rtags
+  :ensure t
+  :init (setq rtags-use-helm t))
+
+#+end_src emacs-lisp
+*** flycheck
+
+#+begin_src emacs-lisp
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 (use-package flycheck-irony
   :ensure t)
 
-#+END_SRC emacs-lisp
+(use-package flycheck-rtags
+  :ensure t)
+
+#+end_src emacs-lisp
+
+*** auto-complete-clang
+   
+#+begin_src emacs-lisp
+
+(use-package auto-complete-clang
+  :ensure t)
+
+#+end_src emacs-lisp
+
+*** company-clang
+
+#+begin_src emacs-lisp
+
+(use-package company-clang
+  :ensure t)
+
+#+end_src emacs-lisp
+
+*** irony
+
+#+begin_src emacs-lisp
+
+(use-package irony 
+  :ensure t)
+
+#+end_src emacs-lisp
+
+*** Finally, cmake-ide
+
+#+begin_src emacs-lisp
+
+(use-package cmake-ide
+  :ensure t
+  :init (cmake-ide-setup))
+
+#+end_src emacs-lisp
 
 ** evil-mode
 
@@ -236,45 +292,8 @@ After my function is made, I assigned it to the shortcut C-c t.
   :ensure t)
 
 #+END_SRC
-   
-** projectile
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package projectile
-  :ensure t)
-
-#+END_SRC
-  
-** helm
-   
-   Helm implements some fuzzy-search mechanisms that are really usefula for almost every search. It is important to note that it does a lot
-more than that, but this is my primary reason for using it.
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package helm
-  :ensure t)
-
-#+END_SRC
-
-  Here I'll change some default keys and set them to the helm equivalents and enable /helm-mode/. /Helm-mode/ brings another fuzzy-search
-funcionalities for other sets of commands.
-
-#+BEGIN_SRC emacs-lisp
-
-(global-set-key (kbd "M-x") #'helm-M-x)
-(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-(global-set-key (kbd "C-x C-f") #'helm-find-files)
-
-(helm-mode 1)
-
-#+END_SRC
 
 ** dracula-theme
-
-   /Dracula-theme/ is my favorite theme until now. Chances are that I'll change it later, but you can use this as a template for any other
-theme that you like.
 
 #+BEGIN_SRC emacs-lisp
 
@@ -286,14 +305,18 @@ theme that you like.
 
 ** relative-line-numbers
 
-   /Relative-line-numbers/ is a good thing for /evil-mode/ because it shows the line numbers relative to the line you are on. For a more
-clear visualization, search for images on the web. The fact is that on /vim/ it is very useful to know the number of line jumps to the
-line you're interested in.
-
 #+BEGIN_SRC emacs-lisp
 
 (use-package relative-line-numbers
   :config (global-relative-line-numbers-mode)
   :ensure t)
+
+#+END_SRC
+* Comment/Uncomment Region Keys
+
+#+BEGIN_SRC emacs-lisp
+
+(global-set-key (kbd "C-a") #'comment-region)
+(global-set-key (kbd "C-b") #'uncomment-region)
 
 #+END_SRC
