@@ -148,6 +148,16 @@ After that, we should require the package and evaluate it:
 
    To use cmake-ide, we need to install these dependencies that are also useful for other things.
 
+*** yasnippet
+
+#+begin_src emacs-lisp
+
+(use-package yasnippet 
+  :ensure t
+  :config (yas-global-mode 1))
+
+#+end_src
+
 *** rtags
 
 #+begin_src emacs-lisp
@@ -157,16 +167,18 @@ After that, we should require the package and evaluate it:
 
 (use-package helm-rtags
   :ensure t
-  :init (setq rtags-use-helm t))
+  :config (setq rtags-use-helm t))
 
 #+end_src
+
 *** flycheck
 
 #+begin_src emacs-lisp
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :pin melpa
+  :config (global-flycheck-mode))
 
 (use-package flycheck-irony
   :ensure t)
@@ -190,7 +202,13 @@ After that, we should require the package and evaluate it:
 #+begin_src emacs-lisp
 
 (use-package irony 
-  :ensure t)
+  :ensure t
+  :config
+    (add-hook 'c++-mode-hook 'irony-mode)
+    (add-hook 'c-mode-hook 'irony-mode)
+    (add-hook 'objc-mode-hook 'irony-mode)
+
+    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
 #+end_src
 
@@ -200,7 +218,7 @@ After that, we should require the package and evaluate it:
 
 (use-package cmake-ide
   :ensure t
-  :init (cmake-ide-setup))
+  :config (cmake-ide-setup))
 
 #+end_src
 
