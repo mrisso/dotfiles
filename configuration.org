@@ -30,6 +30,14 @@ There is also a simple command for that. What we are doing is simply adding the 
 
 #+END_SRC
 
+* Adjusting Font Size
+
+#+BEGIN_SRC emacs-lisp
+
+(set-face-attribute 'default nil :height 160)
+
+#+END_SRC
+
 * Starting Server (Daemon Mode)
 
 The emacs Daemon Mode is very useful beacuse you can open files from the terminal that won't open a new instance of emacs. Instead, the file will be shown in your current session of Daemon Emacs.
@@ -144,9 +152,51 @@ After that, we should require the package and evaluate it:
 
 #+END_SRC
 
-** cmake-ide
+** C/C++ IDE Packages
 
-   To use cmake-ide, we need to install these dependencies that are also useful for other things.
+   Here are some packages for auto-completion, jump-to-definition, syntax checking, etc. (C/C++)
+
+*** helm-gtags
+
+#+begin_src emacs-lisp
+
+(use-package helm-gtags
+  :ensure t
+  :init
+  (setq
+    helm-gtags-ignore-case t
+    helm-gtags-auto-update t
+    helm-gtags-use-input-at-cursor t
+    helm-gtags-pulse-at-cursor t
+    helm-gtags-prefix-key "\C-cg"
+    helm-gtags-suggested-key-mapping t
+  )
+  :config
+    (add-hook 'dired-mode-hook 'helm-gtags-mode)
+    (add-hook 'eshell-mode-hook 'helm-gtags-mode)
+    (add-hook 'c-mode-hook 'helm-gtags-mode)
+    (add-hook 'c++-mode-hook 'helm-gtags-mode)
+    (add-hook 'asm-mode-hook 'helm-gtags-mode)
+
+    (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+    (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+    (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+    (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+    (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+    (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
+)
+
+#+end_src
+
+*** function-args
+
+#+begin_src emacs-lisp
+
+(use-package function-args
+  :ensure t
+  :config (fa-config-default))
+
+#+end_src
 
 *** yasnippet
 
@@ -155,19 +205,6 @@ After that, we should require the package and evaluate it:
 (use-package yasnippet 
   :ensure t
   :config (yas-global-mode 1))
-
-#+end_src
-
-*** rtags
-
-#+begin_src emacs-lisp
-
-(use-package rtags
-  :ensure t)
-
-(use-package helm-rtags
-  :ensure t
-  :config (setq rtags-use-helm t))
 
 #+end_src
 
@@ -183,9 +220,6 @@ After that, we should require the package and evaluate it:
 (use-package flycheck-irony
   :ensure t)
 
-(use-package flycheck-rtags
-  :ensure t)
-
 #+end_src
 
 *** auto-complete-clang
@@ -194,31 +228,6 @@ After that, we should require the package and evaluate it:
 
 (use-package auto-complete-clang
   :ensure t)
-
-#+end_src
-
-*** irony
-
-#+begin_src emacs-lisp
-
-(use-package irony 
-  :ensure t
-  :config
-    (add-hook 'c++-mode-hook 'irony-mode)
-    (add-hook 'c-mode-hook 'irony-mode)
-    (add-hook 'objc-mode-hook 'irony-mode)
-
-    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
-#+end_src
-
-*** Finally, cmake-ide
-
-#+begin_src emacs-lisp
-
-(use-package cmake-ide
-  :ensure t
-  :config (cmake-ide-setup))
 
 #+end_src
 
