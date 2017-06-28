@@ -198,6 +198,58 @@ After that, we should require the package and evaluate it:
 
 #+end_src
 
+*** auto-complete-clang
+   
+#+begin_src emacs-lisp
+
+(use-package auto-complete-clang
+  :ensure t)
+
+#+end_src
+
+*** cedet
+
+#+begin_src emacs-lisp
+
+(load-file (concat user-emacs-directory "/cedet/cedet-devel-load.el"))
+(load-file (concat user-emacs-directory "/cedet/contrib/cedet-contrib-load.el"))
+
+#+end_src
+
+*** semantic
+
+#+begin_src emacs-lisp
+
+(require 'cc-mode)
+(require 'semantic)
+
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+
+(semantic-mode 1)
+
+#+end_src
+
+*** company
+
+#+begin_src emacs-lisp
+
+(use-package company
+  :ensure t
+  :init (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (setq company-backends (delete 'company-semantic company-backends))
+  (define-key c-mode-map  [(tab)] 'company-complete)
+  (define-key c++-mode-map  [(tab)] 'company-complete))
+  
+(use-package company-c-headers
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-c-headers)
+  (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.2.1/"))
+
+#+end_src
+
 *** yasnippet
 
 #+begin_src emacs-lisp
@@ -218,15 +270,6 @@ After that, we should require the package and evaluate it:
   :config (global-flycheck-mode))
 
 (use-package flycheck-irony
-  :ensure t)
-
-#+end_src
-
-*** auto-complete-clang
-   
-#+begin_src emacs-lisp
-
-(use-package auto-complete-clang
   :ensure t)
 
 #+end_src
