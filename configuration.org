@@ -156,6 +156,15 @@ After that, we should require the package and evaluate it:
 
    Here are some packages for auto-completion, jump-to-definition, syntax checking, etc. (C/C++)
 
+*** cedet
+
+#+begin_src emacs-lisp
+
+(load-file (concat user-emacs-directory "/cedet/cedet-devel-load.el"))
+(load-file (concat user-emacs-directory "cedet/contrib/cedet-contrib-load.el"))
+
+#+end_src
+
 *** helm-gtags
 
 #+begin_src emacs-lisp
@@ -204,15 +213,6 @@ After that, we should require the package and evaluate it:
 
 (use-package auto-complete-clang
   :ensure t)
-
-#+end_src
-
-*** cedet
-
-#+begin_src emacs-lisp
-
-(load-file (concat user-emacs-directory "/cedet/cedet-devel-load.el"))
-(load-file (concat user-emacs-directory "/cedet/contrib/cedet-contrib-load.el"))
 
 #+end_src
 
