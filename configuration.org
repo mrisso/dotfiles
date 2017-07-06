@@ -38,6 +38,16 @@ There is also a simple command for that. What we are doing is simply adding the 
 
 #+END_SRC
 
+* Configuring Meta Keys for Mac OS
+  I ran into problems on Mac OS because I needed to use some shortcuts with alt and this is identified with the Meta key. So this is a config to let me do somethings on my Mac keyboard.
+  
+#+BEGIN_SRC emacs-lisp
+
+(when (eq system-type 'darwin)
+  (setq mac-right-option-modifier 'none))
+
+#+END_SRC
+
 * Starting Server (Daemon Mode)
 
 The emacs Daemon Mode is very useful beacuse you can open files from the terminal that won't open a new instance of emacs. Instead, the file will be shown in your current session of Daemon Emacs.
@@ -331,9 +341,9 @@ I am also using ":init" have evil-mode always active when I open emacs.
 #+BEGIN_SRC emacs-lisp
 
 (use-package evil
+  :ensure t
   :init
-  (evil-mode t)
-  :ensure t)
+  (evil-mode t))
 
 (use-package evil-leader
   :ensure t)
@@ -388,9 +398,14 @@ Installing org is just as simple.
 
 (use-package org
   :ensure t
-  :pin melpa)
+  :pin melpa
+  :config
+  (setq org-agenda-prefix-format '((todo . "  %b"))))
 
 (use-package evil-org
+  :ensure t)
+
+(use-package org-pomodoro
   :ensure t)
 
 #+END_SRC
