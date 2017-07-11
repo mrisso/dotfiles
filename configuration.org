@@ -61,6 +61,17 @@ By using the following command on your init file, you get the daemon server star
 
 #+END_SRC
 
+* Stop Making Backup Files
+
+  I don't like those backup files and I do have the habit to save everything. So I'll disable this option.
+  There are some customizations for the backup files but, for now, I'm disabling this.
+  
+#+BEGIN_SRC emacs-lisp
+
+(setq make-backup-files nil)
+
+#+END_SRC
+
 * Indentation Configs
   
 #+BEGIN_SRC emacs-lisp
