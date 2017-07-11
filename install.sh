@@ -1,7 +1,10 @@
 #!/bin/sh
 # Copy the files to .emacs.d
 
-if [ ! -d "~/.emacs.d/" ]; then
+EMACS_DIR="~/.emacs.d"
+CEDET_DIR="~/.emacs.d/cedet"
+
+if [ ! -d $(EMACS_DIR) ]; then
     echo "Creating .emacs.d/ ..."
     mkdir ~/.emacs.d/
 fi
@@ -11,7 +14,7 @@ cp configuration.org ~/.emacs.d/
 
 # Installing CEDET
 
-if [ ! -d "~/.emacs.d/cedet/" ]; then
+if [ ! -d $(CEDET_DIR) ]; then
     echo "Downloading CEDET ..."
     git clone http://git.code.sf.net/p/cedet/git ~/.emacs.d/cedet
 fi
