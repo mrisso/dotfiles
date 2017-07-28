@@ -1,6 +1,8 @@
 #!/bin/sh
 # Copy the files to .emacs.d
 
+python -mplatform | grep -qi Ubuntu && sudo apt-get install texinfo || HOMEBREW_NO_AUTO_UPDATE=1 brew install texinfo
+
 EMACS_DIR="~/.emacs.d"
 CEDET_DIR="~/.emacs.d/cedet"
 
