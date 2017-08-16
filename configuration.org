@@ -211,6 +211,20 @@ does not get the same PATH variable as the Terminal. This package is a workaroun
 
    Here are some packages for auto-completion, jump-to-definition, syntax checking, etc. (C/C++)
 
+*** ivy
+    
+    Here I'm installing ivy 'cause it is a dependency for future packages. Sometimes I ran into trouble for
+downloading automatically a uncompatible version of ivy. So, here I'm using the pin command to make sure that
+I get the newest version.
+    
+#+begin_src emacs-lisp
+
+(use-package ivy
+  :ensure t
+  :pin melpa)
+
+#+end_src
+    
 *** cedet
 
 #+begin_src emacs-lisp
@@ -301,7 +315,7 @@ does not get the same PATH variable as the Terminal. This package is a workaroun
   :ensure t
   :config
   (add-to-list 'company-backends 'company-c-headers)
-  (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.2.1/"))
+  (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.8.4/"))
 
 #+end_src
 
