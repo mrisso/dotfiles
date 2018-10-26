@@ -376,7 +376,7 @@ I am also using ":init" have evil-mode always active when I open emacs.
 #+END_SRC
 
 ** powerline
-
+   
 Installing powerline (and smart-mode-line for themes).
 
 *** Theme Confirmation Workaround
@@ -468,15 +468,37 @@ After my function is made, I assigned it to the shortcut C-c t.
 
 #+END_SRC
 
-** relative-line-numbers
+** relative-lines
 
 #+BEGIN_SRC emacs-lisp
 
-(use-package relative-line-numbers
-  :config (global-relative-line-numbers-mode)
-  :ensure t)
+(setq-default display-line-numbers-type 'relative
+              display-line-numbers-current-absolute t
+              display-line-numbers-width 4
+              display-line-numbers-widen t)
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 #+END_SRC
+
+** assembly programming
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package x86-lookup
+  :ensure t
+  :config
+  (setq x86-lookup-pdf "~/.emacs.d/asmRef.pdf")
+)
+
+(use-package nasm-mode
+  :ensure t
+  :config
+  (add-hook 'asm-mode-hook 'nasm-mode)
+)
+
+#+END_SRC
+
 * Comment/Uncomment Region Keys
 
 #+BEGIN_SRC emacs-lisp
